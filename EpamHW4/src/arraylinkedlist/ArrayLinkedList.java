@@ -65,7 +65,7 @@ public class ArrayLinkedList<T> {
 	@Override
 	public String toString() {
 		String str = "";
-		Node<T> current = header.next;
+		Node<T> current = header;
 		while (current.next != header) {
 			str += "	[";
 			for (int i = 0; i < current.elementsArr.length; i++) {
