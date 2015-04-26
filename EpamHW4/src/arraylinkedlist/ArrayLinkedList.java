@@ -2,7 +2,7 @@ package arraylinkedlist;
 
 public class ArrayLinkedList<T> {
 	private int listSize = 0;
-	private int n = 0;
+	private int n;
 	private Node<T> header = new Node<T>(null, null);
 
 	public ArrayLinkedList(int n) {
@@ -17,6 +17,7 @@ public class ArrayLinkedList<T> {
 		private T[] elementsArr;
 		private boolean hasPlace;
 
+		@SuppressWarnings("unchecked")
 		public Node(Node<T> next, Node<T> previous) {
 			this.next = next;
 			this.previous = previous;
@@ -28,9 +29,9 @@ public class ArrayLinkedList<T> {
 	public void add(T el) {
 		Node<T> curNode = null;
 		if (header.next == header) {
-			curNode = new Node<T>(header, header);
-			header.next = curNode;
-			header.previous = curNode;
+			curNode = new Node<T>(header, header.previous);
+			curNode.next.previous = curNode;
+			curNode.previous.next = curNode;
 			listSize++;
 
 		} else {
@@ -48,26 +49,30 @@ public class ArrayLinkedList<T> {
 				} else if (curNode.elementsArr[i] == null) {
 					placeCount++;
 				}
-				if (placeCount < 1) {
-					curNode.hasPlace = false;
-				}
+			}
+			if (placeCount == 1) {
+				curNode.hasPlace = false;
 			}
 		} else {
-			Node<T> newNode = new Node<T>(header, curNode);
-			curNode.next = newNode;
-			header.previous = newNode;
+			Node<T> newNode = new Node<T>(header, header.previous);
+			newNode.next.previous = newNode;
+			newNode.previous.next = newNode;
 			newNode.elementsArr[0] = el;
 			listSize++;
 		}
 
 	}
 
-	@Override
+	public int getSize() {
+		return listSize;
+	}
+
+	/*@Override
 	public String toString() {
 		String str = "";
 		Node<T> current = header;
 		while (current.next != header) {
-			str += "	[";
+			str += "[";
 			for (int i = 0; i < current.elementsArr.length; i++) {
 				str += current.elementsArr[i];
 				if (i == current.elementsArr.length - 1) {
@@ -76,6 +81,6 @@ public class ArrayLinkedList<T> {
 			}
 		}
 		return str;
-	}
+	}*/
 
 }
