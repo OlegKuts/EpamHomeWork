@@ -3,21 +3,23 @@ package arraylinkedlist;
 public class Main {
 
 	public static void main(String[] args) {
-		ArrayLinkedList<Integer> arrlist = new ArrayLinkedList<Integer>(3);
-		
-			arrlist.add(1);
-			arrlist.add(2);
-			arrlist.add(3);
-			arrlist.add(4);
-			arrlist.add(5);
-			arrlist.add(6);
-			arrlist.add(7);
-			arrlist.add(8);
-			arrlist.add(9);
-			arrlist.add(10);
-		
-		System.out.println(arrlist);
-		System.out.println(arrlist.getSize());
+		ArrayLinkedList<Integer> arrList = new ArrayLinkedList<Integer>(3);
+
+		for(int i = 0; i < 11; i++){
+			arrList.add(i);
+		}
+
+		System.out.println(arrList);
+		System.out.println(arrList.contains(9));
+		System.out.println(arrList.remove(9));
+		System.out.println(arrList.contains(9));
+		System.out.println(arrList);
+		arrList.add(11);
+		System.out.println(arrList);
+		System.out.println(arrList.remove(10));
+		System.out.println(arrList.remove(11));
+		System.out.println(arrList);
+		System.out.println(arrList.getSize());
 	}
 
 }

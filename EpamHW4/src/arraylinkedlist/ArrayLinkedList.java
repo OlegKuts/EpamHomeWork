@@ -26,7 +26,7 @@ public class ArrayLinkedList<T> {
 		}
 	}
 
-	public void add(T el) {
+	public void add(T element) {
 		Node<T> curNode = null;
 		if (header.next == header) {
 			curNode = new Node<T>(header, header.previous);
@@ -44,7 +44,7 @@ public class ArrayLinkedList<T> {
 			int placeCount = 0;
 			for (int i = 0; i < curNode.elementsArr.length; i++) {
 				if (curNode.elementsArr[i] == null && placeCount == 0) {
-					curNode.elementsArr[i] = el;
+					curNode.elementsArr[i] = element;
 					placeCount++;
 				} else if (curNode.elementsArr[i] == null) {
 					placeCount++;
@@ -57,7 +57,7 @@ public class ArrayLinkedList<T> {
 			Node<T> newNode = new Node<T>(header, header.previous);
 			newNode.next.previous = newNode;
 			newNode.previous.next = newNode;
-			newNode.elementsArr[0] = el;
+			newNode.elementsArr[0] = element;
 			listSize++;
 		}
 
@@ -67,20 +67,65 @@ public class ArrayLinkedList<T> {
 		return listSize;
 	}
 
-	@Override
-	public String toString() {
-		String str = "";
-		Node<T> current = header;
-		while ((current = current.next) != header) {
-			str += "[";
-			for (int i = 0; i < current.elementsArr.length; i++) {
-				str += current.elementsArr[i] + ", ";
-				if (i == current.elementsArr.length - 1) {
-					str += "], ";
+	private Node<T> findElementsNode(T element) {
+		Node<T> curNode = header;
+		for (int i = 0; i < listSize; i++) {
+			curNode = curNode.next;
+			for (T curElement : curNode.elementsArr) {
+				if (element.equals(curElement)) {
+					return curNode;
 				}
 			}
 		}
-		return str;
+		return null;
+
 	}
 
+	public boolean contains(T element) {
+		return findElementsNode(element) != null;
+	}
+
+	public T remove(T element) {
+		T curElement = null;
+		Node<T> curNode = findElementsNode(element);
+		if (curNode != null) {
+			int freeSpace =0;
+			for (int i = 0; i < curNode.elementsArr.length; i++) {
+				if (element.equals(curNode.elementsArr[i])) {
+					curElement = curNode.elementsArr[i];
+					curNode.elementsArr[i] = null;
+					curNode.hasPlace = true;
+				}
+				if(curNode.elementsArr[i] == null){
+					freeSpace++;
+				}
+			}
+			if(freeSpace == curNode.elementsArr.length){
+				curNode.next.previous = curNode.previous;
+				curNode.previous.next = curNode.next;
+				curNode.next=curNode.previous=null;
+				curNode.elementsArr = null;
+				listSize--;
+			}
+		}
+		return curElement;
+	}
+
+	@Override
+	public String toString() {
+		String str = "[ ";
+		Node<T> current = header;
+		while ((current = current.next) != header) {
+			str += "{";
+			for (int i = 0; i < current.elementsArr.length; i++) {
+				if (i == current.elementsArr.length - 1) {
+					str += current.elementsArr[i] + "} ";
+				} else {
+					str += current.elementsArr[i] + ", ";
+				}
+			}
+		}
+		str += "]";
+		return str;
+	}
 }
