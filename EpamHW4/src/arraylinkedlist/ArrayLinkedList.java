@@ -30,8 +30,8 @@ public class ArrayLinkedList<T> {
 		Node<T> curNode = null;
 		if (header.next == header) {
 			curNode = new Node<T>(header, header.previous);
-			curNode.next.previous = curNode;
-			curNode.previous.next = curNode;
+			header.previous = curNode;
+			header.next = curNode;
 			listSize++;
 
 		} else {
@@ -67,20 +67,20 @@ public class ArrayLinkedList<T> {
 		return listSize;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
 		String str = "";
 		Node<T> current = header;
-		while (current.next != header) {
+		while ((current = current.next) != header) {
 			str += "[";
 			for (int i = 0; i < current.elementsArr.length; i++) {
-				str += current.elementsArr[i];
+				str += current.elementsArr[i] + ", ";
 				if (i == current.elementsArr.length - 1) {
-					str += "]";
+					str += "], ";
 				}
 			}
 		}
 		return str;
-	}*/
+	}
 
 }
