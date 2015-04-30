@@ -11,7 +11,6 @@ public class ArrayLinkedList<T> {
 	}
 
 	private class Node<T> {
-		// private T element;
 		private Node<T> next;
 		private Node<T> previous;
 		private T[] elementsArr;
@@ -89,21 +88,21 @@ public class ArrayLinkedList<T> {
 		T curElement = null;
 		Node<T> curNode = findElementsNode(element);
 		if (curNode != null) {
-			int freeSpace =0;
+			int freeSpace = 0;
 			for (int i = 0; i < curNode.elementsArr.length; i++) {
 				if (element.equals(curNode.elementsArr[i])) {
 					curElement = curNode.elementsArr[i];
 					curNode.elementsArr[i] = null;
 					curNode.hasPlace = true;
 				}
-				if(curNode.elementsArr[i] == null){
+				if (curNode.elementsArr[i] == null) {
 					freeSpace++;
 				}
 			}
-			if(freeSpace == curNode.elementsArr.length){
+			if (freeSpace == curNode.elementsArr.length) {
 				curNode.next.previous = curNode.previous;
 				curNode.previous.next = curNode.next;
-				curNode.next=curNode.previous=null;
+				curNode.next = curNode.previous = null;
 				curNode.elementsArr = null;
 				listSize--;
 			}
